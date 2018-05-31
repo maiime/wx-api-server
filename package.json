@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/maiime/wx-api-server#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "cookie-parser": "^1.4.3",
+    "crypto": "^1.0.1",
     "express": "^4.16.3"
   },
   "devDependencies": {
