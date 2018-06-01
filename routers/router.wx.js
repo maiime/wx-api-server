@@ -24,13 +24,17 @@ router.get('/getToken', function (req, res) {
  * url 重定向
  */
 router.get('/auth', function (req, res) {
-    if (req.query.url) {
-        let redirect_uri = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.appId}&redirect_uri=${req.query.baseUrl}/getToken&response_type=code&scope=${config.authScope}&state=${req.query.url}#wechat_redirect`;
+    if (req.query.redirect_uri) {
+        let redirect_uri = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.appId}&redirect_uri=${req.protocol}://${req.hostname}${req.baseUrl}/login&response_type=code&scope=${config.authScope}&state=${req.query.redirect_uri}#wechat_redirect`;
         res.redirect(redirect_uri);
     }
 });
-router.get('/auth2', function (req, res) {
-    res.redirect(req.baseUrl + '/getToken');
+router.get('/login', function (req, res) {
+    let code = req.query.code;
+    let redirect_uri = req.query.redirect_uri;
+    wx.getAuthToken(code).then(token => {
+        res.json(token);
+    });
 });
 
 
